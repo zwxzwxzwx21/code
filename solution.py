@@ -7,7 +7,8 @@ def add_virtual_column(df: pd.DataFrame, role: str, new_column: str) -> pd.DataF
     
     # validations
     ### Column labels must consist only of letters and underscores (_).
-    role_columns_split = re.split(r'[+-*]', role)
+    ### if the role or any column label is incorrect, the function should return an empty DataFrame.
+    role_columns_split = re.split(r'[+*-]', role)
 
     if not pattern.match(new_column):
         return pd.DataFrame([])
@@ -23,7 +24,8 @@ def add_virtual_column(df: pd.DataFrame, role: str, new_column: str) -> pd.DataF
     ### The function must support basic operations: addition (+), subtraction (-), and multiplication (*).
     if not any(op in role for op in operations):
         return pd.DataFrame([]) 
+    
+
 
 df = pd.DataFrame([[1, 1]] * 5, columns = ["label_one", "label_two"])
 
-print(df)
