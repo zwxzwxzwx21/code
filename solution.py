@@ -13,7 +13,7 @@ def add_virtual_column(df: pd.DataFrame, role: str, new_column: str) -> pd.DataF
     if not pattern.match(new_column):
         return pd.DataFrame([])
     
-    if not all(pattern.match((col) for col in df.columns)):
+    if not all(pattern.match(col) for col in df.columns):
         return pd.DataFrame([])
     
     for col_label in role_columns_split:
@@ -25,7 +25,5 @@ def add_virtual_column(df: pd.DataFrame, role: str, new_column: str) -> pd.DataF
     if not any(op in role for op in operations):
         return pd.DataFrame([]) 
     
-
-
-df = pd.DataFrame([[1, 1]] * 5, columns = ["label_one", "label_two"])
+    return df.assign(**{new_column: eval(role, {}, df)})
 
